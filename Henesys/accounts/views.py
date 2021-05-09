@@ -1,9 +1,16 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
+from django.template.response import TemplateResponse
+#from pprint import pprint 
 
 def home(request):
-    return render(request,'home.html')
+    args = {}
+ #   pprint(vars(name))
+    args['username'] = request.user.username
+    args['userstars'] = request.user.henesysuser.stars
+    args['usermana'] = request.user.henesysuser.mana
+    return TemplateResponse(request, 'home.html', args)
 
 def signup(request):
     if request.method == "POST":
