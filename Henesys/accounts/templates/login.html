@@ -1,0 +1,19 @@
+<h1>HENESYS LOGIN</h1>
+
+<form method='POST' action="{%url 'login'%}">
+    {% csrf_token %}
+    Username:
+    <br>
+    <input name="username"type="text">
+    <br>
+    Password:
+    <br>
+    <input name="password"type="password">
+    <br><br>
+    <input type="submit" class="btn btn-primary" value="log in">
+</form>
+
+
+<form action="{%url 'signup'%}">
+    <input type="submit" class="btn btn-primary" value="sign up">
+</form>
