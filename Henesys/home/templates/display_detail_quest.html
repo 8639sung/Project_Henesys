@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<html>
+    <head>
+        <title>Quest</title>
+    </head>
+    <body>
+        <h1>Quest</h1>
+        <p>{{quest.questname}}</p>
+        <p>{{quest.contents}}</p>
+        <br>rewards<br> 
+        stars : {{quest.stars}} mama : {{quest.mana}}</p>
+        <button><a href="/home/display_questlist/{{quest.pk}}/edit">Edit</a></button>
+        <button><a href="/home/display_questlist/{{quest.pk}}/remove">Remove</a></button>
+        <button><a href="{% url 'display_questlist' %}">Return</a></button>
+    </body>
+</html>
+
+{% endblock %}

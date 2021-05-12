@@ -19,7 +19,6 @@ import accounts.views
 import home.views
 
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', accounts.views.login, name='login'),

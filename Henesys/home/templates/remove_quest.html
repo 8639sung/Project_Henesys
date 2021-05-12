@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delect Quest</title>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        <h3>Do you want to delect "{{ quest.questname }}" ?</h3>
+
+        <button>Delect</button>
+        <button><a href="/home/display_questlist/{{quest.pk}}">Return</a></button>
+    </form>
+</body>
+</html>
+
+{% endblock %}

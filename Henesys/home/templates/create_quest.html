@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Quest</title>
+</head>
+<body>
+    <h1>Request New Quest</h1>
+    <form method="POST">
+        {% csrf_token %}
+        Quest name<br>
+        <input type="text" name="questname"><br>
+        Quest contents<br>
+        <textarea rows="10" cols="50" name="contents"></textarea><br>
+        stars<br>
+        <input type="number" min="0" max="99999999" name="stars"><br>
+        mana<br>
+        <input type="number" min="0" max="99999999" name="mana"><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+<button><a href="{% url 'display_questlist' %}">Return</a></button>
+</html>
+
+{% endblock %}
