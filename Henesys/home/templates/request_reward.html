@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Complete">
+    <button><a href="/home/display_questlist/{{quest.pk}}">Cancle</a></button>
+</form>
+
+{% endblock %}

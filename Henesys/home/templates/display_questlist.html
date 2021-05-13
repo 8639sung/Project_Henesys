@@ -3,17 +3,19 @@
 
 {% block content %}
 <title>Quest List</title>
-<h1>List of Quest</h1>
+<h1>Quest List</h1>
 <table>
     {% for quest in questlist %}
         <ul>
-            <li><a href="{{quest.pk}}">{{quest.questname}}</a></li>
+            <li><h3><a href="{{quest.pk}}">{{quest.questname}}</a></h3></li>
         </ul>
     {% endfor %}
 </table>
 <nav class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light">
     <ul class="navbar-nav ml-auto">
+        {% if request.user.is_superuser %}
         <button><a href="{% url 'create_quest' %}">Adding Quest</a></button>
+        {% endif %}
     </ul>
 </nav>
 {% endblock %}

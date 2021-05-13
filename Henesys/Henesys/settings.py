@@ -42,8 +42,11 @@ INSTALLED_APPS = [
     'jquery',
     'bootstrap',
     'accounts.apps.AccountsConfig',
-    'active_link'
+    'active_link',
+    'taggit.apps.TaggitAppConfig',    
 ]
+
+TAGGIT_CASE_INSENSITIVE = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
