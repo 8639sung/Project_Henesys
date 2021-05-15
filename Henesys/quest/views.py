@@ -3,17 +3,9 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from django.template.response import TemplateResponse
 from .models import Quest
-
-
+from django.utils import timezone
 #from pprint import pprint 
-
-def home(request):
-    userinfo = {}
- #   pprint(vars(name))
-    userinfo['username'] = request.user.username
-    userinfo['userstars'] = request.user.henesysuser.stars
-    userinfo['usermana'] = request.user.henesysuser.mana
-    return TemplateResponse(request, 'home.html', userinfo)
+#   pprint(vars(name))
 
 def test(request):
    return render(request, 'test.html')
@@ -34,6 +26,9 @@ def create_quest(request):
             contents=request.POST['contents'],
             stars=request.POST['stars'],
             mana=request.POST['mana'],
+            pub_date=timezone.localtime(),
+            closed_date=None,
+            due_date=request.POST['due_date'],
             )
          return redirect('display_questlist')
       return render(request, 'create_quest.html')
@@ -54,6 +49,7 @@ def edit_quest(request, pk):
          quest_obj.contents=request.POST['contents']
          quest_obj.stars=request.POST['stars']
          quest_obj.mana=request.POST['mana']
+         quest_obj.due_date=request.POST['due_date']
          quest_obj.save()
          return redirect('display_detail_quest', pk=pk)
       return render(request,'edit_quest.html',{'quest':quest_obj})

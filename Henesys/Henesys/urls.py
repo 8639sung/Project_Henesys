@@ -16,12 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 import accounts.views
-import home.views
+import quest.views
+import Henesys.views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', accounts.views.login, name='login'),
     path('accounts/', include('accounts.urls')),
-    path('home/', include('home.urls')),
+    path('quest/', include('quest.urls')),
+    path('home/', Henesys.views.home, name='home'),
 ]

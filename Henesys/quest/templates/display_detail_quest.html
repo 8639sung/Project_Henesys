@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
 
 <html>
@@ -13,15 +12,18 @@
         <p>{{quest.contents}}</p>
         <br>rewards<br> 
         stars : {{quest.stars}} mama : {{quest.mana}}</p>
+        pub_date : {{quest.pub_date|date:"Y-m-d H:i"}}</p> 
+        closed_date : {{quest.closed_date|date:"Y-m-d H:i"}}</p> 
+        due_date : {{quest.due_date|date:"Y-m-d H:i"}}</p> 
  
         <nav class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light">
             <ul class="navbar-nav">
-                <button><a href="/home/display_questlist/{{quest.pk}}/request">Complete</a></button>
+                <button><a href="/quest/display_questlist/{{quest.pk}}/request">Complete</a></button>
             </ul>
             <ul class="navbar-nav ml-auto">
                 {% if request.user.is_superuser %}
-                <button><a href="/home/display_questlist/{{quest.pk}}/edit">Edit</a></button>
-                <button><a href="/home/display_questlist/{{quest.pk}}/remove">Remove</a></button>
+                <button><a href="/quest/display_questlist/{{quest.pk}}/edit">Edit</a></button>
+                <button><a href="/quest/display_questlist/{{quest.pk}}/remove">Remove</a></button>
                 {% endif %}
                 <button><a href="{% url 'display_questlist' %}">Return</a></button>
             </ul>

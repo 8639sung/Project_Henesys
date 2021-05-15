@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
+
 <title>Quest List</title>
 <h1>Quest List</h1>
 <table>
     {% for quest in questlist %}
         <ul>
             <li><h3><a href="{{quest.pk}}">{{quest.questname}}</a></h3></li>
+            pub_date : {{quest.pub_date|date:"Y-m-d H:i"}}</p> 
+            closed_date : {{quest.closed_date|date:"Y-m-d H:i"}}</p> 
+            due_date : {{quest.due_date|date:"Y-m-d H:i"}}</p> 
         </ul>
     {% endfor %}
 </table>

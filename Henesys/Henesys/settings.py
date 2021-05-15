@@ -16,7 +16,6 @@ STATIC_ROOT = "/home/zzin/Workspace/Project_Henesys/static"
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -38,12 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'home.apps.HomeConfig',
+    'quest.apps.QuestConfig',
+    'accounts.apps.AccountsConfig',
+    'taggit.apps.TaggitAppConfig',
     'jquery',
     'bootstrap',
-    'accounts.apps.AccountsConfig',
-    'active_link',
-    'taggit.apps.TaggitAppConfig',    
+    'active_link',    
 ]
 
 TAGGIT_CASE_INSENSITIVE = True
@@ -115,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
@@ -136,4 +135,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
-]
+]   
+
