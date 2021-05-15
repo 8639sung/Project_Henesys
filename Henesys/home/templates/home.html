@@ -11,4 +11,14 @@ NAME : {{ username }}
 STARS : {{ userstars }}
 <BR>
 MANA : {{ usermana }}
+
+<form action="{%url 'addStarsWrapper'%}" method='GET'>
+    <button type='submit'> Add Stars</button>
+</form>
+
+<form action="{%url 'addManaWrapper'%}" method='GET'>
+    <button type='submit'> Add Stars</button>
+</form>
+
 {% endblock %}
+

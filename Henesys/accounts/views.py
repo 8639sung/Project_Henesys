@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
-
+from .models import ResourceManager
 def signup(request):
     if request.method == "POST":
         if request.POST["password1"] == request.POST["password2"]:
@@ -29,4 +29,11 @@ def logout(request):
     auth.logout(request)
     return redirect('login')
 
+def addStarsWrapper(request):
+    ResourceManager.addStars(request.user, 10)
+    return redirect('home')
+
+def addManaWrapper(request):
+    ResourceManager.addMana(request.user, 10)
+    return redirect('home')    
 #    , {'error':' please corfirm password. '}
