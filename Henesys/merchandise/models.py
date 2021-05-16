@@ -1,10 +1,9 @@
 from django.db import models
-from django.contrib.postgres.functions import RandomUUID
-
+import uuid
 
 # Create your models here.
 class merchandise(models.Model):
-    refID = models.UUIDField(primary_key=True, default=RandomUUID, editable=False)
+    refID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(
         max_length=50,
         default='unnamed item',
