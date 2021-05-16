@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'active_link',
     'taggit.apps.TaggitAppConfig',    
+    'merchandise.apps.MerchandiseConfig',
 ]
 
 TAGGIT_CASE_INSENSITIVE = True

@@ -25,10 +25,12 @@ def update_profile_signal(sender, instance, created, **kwargs):
 class ResourceManager():
     @classmethod
     def getStarMultiplier(self):
+        # events.getCurrentMultiplier
         return 1
 
     @classmethod
     def getManaMultiplier(self):
+        # events.getCurrentMultiplier
         return 1        
 
     @classmethod
