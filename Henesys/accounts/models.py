@@ -21,3 +21,26 @@ def update_profile_signal(sender, instance, created, **kwargs):
     if created:     
         HenesysUser.objects.create(user=instance)
     instance.henesysuser.save()
+
+class ResourceManager():
+    @classmethod
+    def getStarMultiplier(self):
+        # events.getCurrentMultiplier
+        return 1
+
+    @classmethod
+    def getManaMultiplier(self):
+        # events.getCurrentMultiplier
+        return 1        
+
+    @classmethod
+    def addStars(self, user, vStars):
+        multiplier = self.getStarMultiplier()
+        user.henesysuser.stars += multiplier*vStars
+        user.henesysuser.save()
+
+    @classmethod
+    def addMana(self, user, vMana):
+        multiplier = self.getManaMultiplier()
+        user.henesysuser.mana += multiplier*vMana
+        user.henesysuser.save()

@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'taggit.apps.TaggitAppConfig',
     'jquery',
     'bootstrap',
-    'active_link',    
+    'merchandise.apps.MerchandiseConfig',
+    'active_link',
 ]
 
 TAGGIT_CASE_INSENSITIVE = True
