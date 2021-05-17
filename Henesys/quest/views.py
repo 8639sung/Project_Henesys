@@ -12,7 +12,18 @@ def test(request):
 
 def display_questlist(request):
    questlist = Quest.objects.all()
-   return render(request,'display_questlist.html', {'questlist':questlist})
+   sort = request.GET.get('sort', '')
+   if sort == 'open':
+        questlist = Quest.objects.filter(status='open').order_by('-pub_date')
+   elif sort == 'closed':
+        questlist = Quest.objects.filter(status='closed').order_by('-pub_date')
+   elif sort == 'review':
+        questlist = Quest.objects.filter(status='review').order_by('-pub_date')
+   elif sort == 'rejected':
+        questlist = Quest.objects.filter(status='rejected').order_by('-pub_date')
+   else:
+        questlist = Quest.objects.order_by('-pub_date')
+   return render(request,'display_questlist.html', {'questlist':questlist, 'sort':sort})
 
 def display_detail_quest(request, pk):
    quest_obj = Quest.objects.get(pk=pk)
@@ -26,6 +37,7 @@ def create_quest(request):
             contents=request.POST['contents'],
             stars=request.POST['stars'],
             mana=request.POST['mana'],
+            status='open',
             pub_date=timezone.localtime(),
             closed_date=None,
             due_date=request.POST['due_date'],

@@ -1,19 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
 <title>Quest List</title>
-<h1>Quest List</h1>
-<table>
-    {% for quest in questlist %}
-        <ul>
-            <li><h3><a href="{{quest.pk}}">{{quest.questname}}</a></h3></li>
-            pub_date : {{quest.pub_date|date:"Y-m-d H:i"}}</p> 
-            closed_date : {{quest.closed_date|date:"Y-m-d H:i"}}</p> 
-            due_date : {{quest.due_date|date:"Y-m-d H:i"}}</p> 
-        </ul>
-    {% endfor %}
-</table>
+
+<div class="container my-3">
+    <h1>Quest List</h1>
+    <div class="col-2">
+        <select class="form-control sort">
+            <option value="recent" {% if sort == 'recent' %}selected{% endif %}>Recent</option>
+            <option value="open" {% if sort == 'open' %}selected{% endif %}>Open</option>
+            <option value="closed" {% if sort == 'closed' %}selected{% endif %}>Closed</option>
+            <option value="review" {% if sort == 'review' %}selected{% endif %}>Review</option>
+            <option value="rejected" {% if sort == 'rejected' %}selected{% endif %}>Rejected</option>
+        </select>
+    </div>
+
+    <table>
+        {% for quest in questlist %}
+            <ul>
+                <h3><a href="{{quest.pk}}">{{quest.questname}}</a></h3> <h6>({{quest.status}})</h6>
+                pub_date : {{quest.pub_date|date:"Y-m-d H:i"}}</p> 
+                closed_date : {{quest.closed_date|date:"Y-m-d H:i"}}</p> 
+                due_date : {{quest.due_date|date:"Y-m-d H:i"}}</p> 
+            </ul>
+        {% endfor %}
+    </table>
+</div>
+
 <nav class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light">
     <ul class="navbar-nav ml-auto">
         {% if request.user.is_superuser %}
@@ -21,4 +34,22 @@
         {% endif %}
     </ul>
 </nav>
+
+<form id="searchForm" method="get" action="{% url 'display_questlist' %}">
+    <input type="hidden" id="sort" name="sort" value="{{sort}}">
+</form>
+
 {% endblock %}
+
+{% block script %}
+
+<script type='text/javascript'>
+    $(document).ready(function(){
+        $(".sort").change(function() {    
+            $("#sort").val($(this).val());
+        });
+    });
+</script>
+
+{% endblock %}
+
