@@ -5,8 +5,9 @@
 
 <div class="container my-3">
     <h1>Quest List</h1>
+
     <div class="col-2">
-        <select class="form-control sort">
+        <select onchange="sorting(this);">
             <option value="recent" {% if sort == 'recent' %}selected{% endif %}>Recent</option>
             <option value="open" {% if sort == 'open' %}selected{% endif %}>Open</option>
             <option value="closed" {% if sort == 'closed' %}selected{% endif %}>Closed</option>
@@ -17,12 +18,17 @@
 
     <table>
         {% for quest in questlist %}
-            <ul>
-                <h3><a href="{{quest.pk}}">{{quest.questname}}</a></h3> <h6>({{quest.status}})</h6>
-                pub_date : {{quest.pub_date|date:"Y-m-d H:i"}}</p> 
-                closed_date : {{quest.closed_date|date:"Y-m-d H:i"}}</p> 
-                due_date : {{quest.due_date|date:"Y-m-d H:i"}}</p> 
-            </ul>
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title"><a href="{{quest.pk}}">{{quest.questname}}</a></h3> 
+                    <h6 class="card-subtitle mb-2 text-muted">{{quest.pub_date|date:"Y-m-d H:i"}} ~ {{quest.due_date|date:"Y-m-d H:i"}}</h6>
+                    <p class="card-text">
+                        ({{quest.status}})<br>
+                        <h5>{{quest.contents}}</h5>
+                        closed_date : {{quest.closed_date|date:"Y-m-d H:i"}}<br> 
+                    </p> 
+                </div>
+            </div>
         {% endfor %}
     </table>
 </div>
@@ -35,21 +41,16 @@
     </ul>
 </nav>
 
-<form id="searchForm" method="get" action="{% url 'display_questlist' %}">
-    <input type="hidden" id="sort" name="sort" value="{{sort}}">
+<form id="sort_form" method="get" action="{% url 'display_questlist' %}">
+    <input type="hidden" id="sort" name="sort" value="{{ sort }}" >
 </form>
 
-{% endblock %}
-
-{% block script %}
-
 <script type='text/javascript'>
-    $(document).ready(function(){
-        $(".sort").change(function() {    
-            $("#sort").val($(this).val());
-        });
-    });
+    
+    function sorting(opt){
+        $("#sort").val(opt.value);
+        $("#sort_form").submit();
+    }
 </script>
 
 {% endblock %}
-

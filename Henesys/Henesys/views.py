@@ -4,7 +4,6 @@ from django.template.response import TemplateResponse
 
 def home(request):
     userinfo = {}
- #   pprint(vars(name))
     userinfo['username'] = request.user.username
     userinfo['userstars'] = request.user.henesysuser.stars
     userinfo['usermana'] = request.user.henesysuser.mana
