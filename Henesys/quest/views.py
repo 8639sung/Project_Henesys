@@ -29,6 +29,14 @@ def display_detail_quest(request, pk):
    quest_obj = Quest.objects.get(pk=pk)
    return render(request, 'display_detail_quest.html', {'quest':quest_obj})   
 
+def change_quest_status(request):
+   new_status = request.POST['new_status']
+   pk = request.POST['pk']
+   quest_obj = Quest.objects.get(pk=pk)
+   quest_obj.status = new_status
+   quest_obj.save()
+   return render(request, 'display_detail_quest.html', {'new_status':new_status, 'pk':pk, 'quest':quest_obj})
+
 def create_quest(request):
    if request.user.is_superuser:
       if request.method == 'POST':

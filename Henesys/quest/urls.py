@@ -9,4 +9,5 @@ urlpatterns = [
     path('display_questlist/<int:pk>/remove', views.remove_quest, name='remove_quest'),
     path('display_questlist/<int:pk>/edit', views.edit_quest, name='edit_quest'),
     path('display_questlist/<int:pk>/request', views.request_reward, name='request_reward'),
+    path('change_quest_status', views.change_quest_status,name='change_quest_status'),
 ]

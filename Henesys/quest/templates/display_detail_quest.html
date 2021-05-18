@@ -1,34 +1,62 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<title>Quest</title>
 
-<html>
-    <head>
-        <title>Quest</title>
-    </head>
-    <body>
-        <h1>Quest</h1>
-        <p>{{quest.questname}}</p>
-        <p>{{quest.contents}}</p>
-        rewards<br> 
-        stars : {{quest.stars}} mama : {{quest.mana}}</p>
-        pub_date : {{quest.pub_date|date:"Y-m-d H:i"}}</p> 
-        closed_date : {{quest.closed_date|date:"Y-m-d H:i"}}</p> 
-        due_date : {{quest.due_date|date:"Y-m-d H:i"}}</p> 
- 
-        <nav class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light">
-            <ul class="navbar-nav">
-                <button><a href="/quest/display_questlist/{{quest.pk}}/request">Complete</a></button>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                {% if request.user.is_superuser %}
-                <button><a href="/quest/display_questlist/{{quest.pk}}/edit">Edit</a></button>
-                <button><a href="/quest/display_questlist/{{quest.pk}}/remove">Remove</a></button>
-                {% endif %}
-                <button><a href="{% url 'display_questlist' %}">Return</a></button>
-            </ul>
-        </nav>
-    </body>
-</html>
+<div class="container my-3">
+    <h1>Quest</h1>
+    
+    <div class="card">
+        <div class="card-body">
+            {% if request.user.is_superuser %}
+            <div class="col-2 ml-auto">
+                Status : <select onchange="status_change(this);">
+                    <option value="">Select</option>
+                    <option value="open" {% if sort == 'open' %}selected{% endif %}>Open</option>
+                    <option value="closed" {% if sort == 'closed' %}selected{% endif %}>Closed</option>
+                    <option value="review" {% if sort == 'review' %}selected{% endif %}>Review</option>
+                    <option value="rejected" {% if sort == 'rejected' %}selected{% endif %}>Rejected</option>
+                </select>
+            </div>
+            {% endif %}
+            <h3 class="card-title">{{quest.questname}}</a></h3> 
+            <h6 class="card-subtitle mb-2 text-muted">{{quest.pub_date|date:"Y-m-d H:i"}} ~ {{quest.due_date|date:"Y-m-d H:i"}}</h6>
+            <p class="card-text">
+                ({{quest.status}})<br>
+                <h5>{{quest.contents}}</h5>
+                rewards<br> 
+                stars : {{quest.stars}} mama : {{quest.mana}}</p>
+                closed_date : {{quest.closed_date|date:"Y-m-d H:i"}}<br> 
+            </p> 
+        </div>
+    </div>
+</div>
+
+<nav class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light">
+    <ul class="navbar-nav">
+        <button><a href="/quest/display_questlist/{{quest.pk}}/request">Complete</a></button>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+        {% if request.user.is_superuser %}
+        <button><a href="/quest/display_questlist/{{quest.pk}}/edit">Edit</a></button>
+        <button><a href="/quest/display_questlist/{{quest.pk}}/remove">Remove</a></button>
+        {% endif %}
+        <button><a href="{% url 'display_questlist' %}">Return</a></button>
+    </ul>
+</nav>
+
+<form id="status_form" method="POST" action="{% url 'change_quest_status' %}">
+    {% csrf_token %}
+    <input type="hidden" id="new_status" name="new_status" value="{{ new_status }}" >
+    <input type="hidden" id="pk" name="pk" value="{{ quest.pk }}">
+</form>
+
+<script type='text/javascript'>
+    
+    function status_change(opt){
+        $("#new_status").val(opt.value);
+        $("#status_form").submit();
+    }
+</script>
 
 {% endblock %}
