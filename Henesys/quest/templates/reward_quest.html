@@ -4,15 +4,14 @@
 {% block content %}
 
 <head>
-    <title>Request Quest</title>
+    <title>Reward Quest</title>
 </head>
 <div class="container my-3">
     <body>
-
     <form method="POST">
         {% csrf_token %}
-        <h1>Do you want to Request "{{ quest.questname }}" ?</h1>
-        
+        <h1>Do you want to Reward "{{ quest.questname }}" ?</h1>
+
         <input type="submit" value="Vertify">
         <button><a href="/quest/display_questlist/{{quest.pk}}">Cancle</a></button>
     </form>

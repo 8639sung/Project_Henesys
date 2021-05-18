@@ -34,12 +34,25 @@
 
 <nav class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light">
     <ul class="navbar-nav">
+        {% if quest.status == 'open' %}
+        {% if request.user.is_superuser %}
+        {% else %}
         <button><a href="/quest/display_questlist/{{quest.pk}}/request">Complete</a></button>
+        {% endif %}
+        {% endif %}
+        {% if quest.status == 'review' %}
+          This Quest is currently under review&nbsp;&nbsp; 
+            {% if request.user.is_superuser %}
+            <button><a href="/quest/display_questlist/{{quest.pk}}/reward">Accept</a></button>&nbsp;
+            <button><a href="/quest/display_questlist/{{quest.pk}}/reject">Reject</a></button>
+            {% endif %}
+        {% endif %}
+        
     </ul>
     <ul class="navbar-nav ml-auto">
         {% if request.user.is_superuser %}
-        <button><a href="/quest/display_questlist/{{quest.pk}}/edit">Edit</a></button>
-        <button><a href="/quest/display_questlist/{{quest.pk}}/remove">Remove</a></button>
+        <button><a href="/quest/display_questlist/{{quest.pk}}/edit">Edit</a></button>&nbsp;
+        <button><a href="/quest/display_questlist/{{quest.pk}}/remove">Remove</a></button>&nbsp;
         {% endif %}
         <button><a href="{% url 'display_questlist' %}">Return</a></button>
     </ul>

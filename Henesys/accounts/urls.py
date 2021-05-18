@@ -7,5 +7,4 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('addStarsWrapper/', views.addStarsWrapper, name='addStarsWrapper'),
     path('addManaWrapper/', views.addManaWrapper, name='addManaWrapper'),
-
 ]

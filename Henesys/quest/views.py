@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.template.response import TemplateResponse
-from .models import Quest
-from django.utils import timezone
+from .models import Quest 
+from django.utils import timezone 
 #from pprint import pprint 
 #   pprint(vars(name))
 
@@ -77,6 +77,24 @@ def edit_quest(request, pk):
 def request_reward(request, pk):
    quest_obj = Quest.objects.get(pk=pk)
    if request.method == 'POST':
-      #send this request to admin
-      return render('display_questlist')
-   return render(request, 'request_reward.html')
+      quest_obj.status = 'review'
+      quest_obj.save()
+      return redirect('display_detail_quest', pk=pk)
+   return render(request, 'request_reward.html', {'quest': quest_obj})
+
+def reject_quest(request, pk):
+   quest_obj = Quest.objects.get(pk=pk)
+   if request.method == 'POST':
+      quest_obj.status = 'rejected'
+      quest_obj.save()
+      return redirect('display_detail_quest', pk=pk)
+   return render(request, 'reject_quest.html', {'quest': quest_obj}) 
+   
+def reward_quest(request, pk):
+   quest_obj = Quest.objects.get(pk=pk)
+   if request.method == 'POST':
+      quest_obj.status = 'closed'
+      quest_obj.closed_date = timezone.localtime()
+      quest_obj.save()
+      return redirect('display_detail_quest', pk=pk)
+   return render(request, 'reward_quest.html', {'quest': quest_obj})     

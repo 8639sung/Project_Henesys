@@ -6,18 +6,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title>Delect Quest</title>
 </head>
-<body>
+<div class="container my-3">
+    <body>
     <form method="POST">
         {% csrf_token %}
-        <h3>Do you want to delect "{{ quest.questname }}" ?</h3>
+        <h1>Do you want to delect "{{ quest.questname }}" ?</h1>
 
         <button>Delect</button>
         <button><a href="/quest/display_questlist/{{quest.pk}}">Return</a></button>
     </form>
-</body>
+    </body>
+</div>
 </html>
 
 {% endblock %}
