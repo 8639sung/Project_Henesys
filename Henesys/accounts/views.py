@@ -30,10 +30,10 @@ def logout(request):
     return redirect('login')
 
 def addStarsWrapper(request):
-    ResourceManager.addStars(request.user, 10)
+    ResourceManager.addStars(request.user, stars_value)
     return redirect('home')
 
 def addManaWrapper(request):
-    ResourceManager.addMana(request.user, 10)
+    ResourceManager.addMana(request.user, mana_value)
     return redirect('home')    
 #    , {'error':' please corfirm password. '}

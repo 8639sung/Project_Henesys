@@ -4,17 +4,19 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<div class="container my-3">
+    <head>
     <meta charset="UTF-8">
     <title>New Quest</title>
-</head>
-<body>
+    </head>
+    <body>
+        
     <h1>Request New Quest</h1>
     <form method="POST">
         {% csrf_token %}
         Quest name<br>
         <input type="text" name="questname"><br>
-        Quest contents<br>
+        <br>Quest contents<br>
         <textarea rows="10" cols="50" name="contents"></textarea><br>
         stars<br>
         <input type="number" min="0" max="99999999" name="stars"><br>
@@ -22,10 +24,15 @@
         <input type="number" min="0" max="99999999" name="mana"><br>
         expired date<br>
         <input type="datetime" name="due_date" value="0000-00-00 00:00"><br>
-        <input type="submit" value="Submit">
+        
+        {% for user in userlist %}
+            <input id="selected_user" type="checkbox" name="selected_user" value="{{ user.username }}">&nbsp{{user.username}}&nbsp
+        {% endfor %}
+
+        <br><input type="submit" value="Submit"> <button><a href="{% url 'display_questlist' %}">Return</a></button>
     </form>
-</body>
-<button><a href="{% url 'display_questlist' %}">Return</a></button>
+    </body>
+</div>
 </html>
 
 {% endblock %}

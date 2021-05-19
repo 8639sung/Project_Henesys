@@ -2,14 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.template.response import TemplateResponse
-from .models import Quest 
-from django.utils import timezone 
-#from pprint import pprint 
-#   pprint(vars(name))
-
-def test(request):
-   return render(request, 'test.html')
-
+from .models import Quest
+from django.utils import timezone
+from accounts.models import ResourceManager 
+  
 def display_questlist(request):
    questlist = Quest.objects.all()
    sort = request.GET.get('sort', '')
@@ -30,28 +26,33 @@ def display_detail_quest(request, pk):
    return render(request, 'display_detail_quest.html', {'quest':quest_obj})   
 
 def change_quest_status(request):
-   new_status = request.POST['new_status']
-   pk = request.POST['pk']
-   quest_obj = Quest.objects.get(pk=pk)
-   quest_obj.status = new_status
-   quest_obj.save()
+   if request.user.is_superuser:
+      new_status = request.POST['new_status']
+      pk = request.POST['pk']
+      quest_obj = Quest.objects.get(pk=pk)
+      quest_obj.status = new_status
+      quest_obj.save()
    return render(request, 'display_detail_quest.html', {'new_status':new_status, 'pk':pk, 'quest':quest_obj})
 
 def create_quest(request):
+   userlist = User.objects.all()
    if request.user.is_superuser:
       if request.method == 'POST':
-         new_quest=Quest.objects.create(
-            questname=request.POST['questname'],
-            contents=request.POST['contents'],
-            stars=request.POST['stars'],
-            mana=request.POST['mana'],
-            status='open',
-            pub_date=timezone.localtime(),
-            closed_date=None,
-            due_date=request.POST['due_date'],
-            )
+         publish_target_list=request.POST.getlist('selected_user')
+         for target_username in publish_target_list:
+            new_quest=Quest.objects.create(
+               questname=request.POST['questname'],
+               contents=request.POST['contents'],
+               stars=request.POST['stars'],
+               mana=request.POST['mana'],
+               status='open',
+               pub_date=timezone.localtime(),
+               closed_date=None,
+               due_date=request.POST['due_date'],
+               publish_target=target_username
+               )
          return redirect('display_questlist')
-      return render(request, 'create_quest.html')
+      return render(request, 'create_quest.html', {'userlist':userlist})
 
 def remove_quest(request, pk):
    if request.user.is_superuser:
@@ -76,25 +77,33 @@ def edit_quest(request, pk):
 
 def request_reward(request, pk):
    quest_obj = Quest.objects.get(pk=pk)
-   if request.method == 'POST':
-      quest_obj.status = 'review'
-      quest_obj.save()
-      return redirect('display_detail_quest', pk=pk)
+   if request.user.username == quest_obj.publish_target:
+      if request.method == 'POST':
+         quest_obj.status = 'review'
+         quest_obj.save()
+         return redirect('display_detail_quest', pk=pk)
    return render(request, 'request_reward.html', {'quest': quest_obj})
 
 def reject_quest(request, pk):
-   quest_obj = Quest.objects.get(pk=pk)
-   if request.method == 'POST':
-      quest_obj.status = 'rejected'
-      quest_obj.save()
-      return redirect('display_detail_quest', pk=pk)
+   if request.user.is_superuser:
+      quest_obj = Quest.objects.get(pk=pk)
+      if request.method == 'POST':
+         quest_obj.status = 'rejected'
+         quest_obj.save()
+         return redirect('display_detail_quest', pk=pk)
    return render(request, 'reject_quest.html', {'quest': quest_obj}) 
    
 def reward_quest(request, pk):
-   quest_obj = Quest.objects.get(pk=pk)
-   if request.method == 'POST':
-      quest_obj.status = 'closed'
-      quest_obj.closed_date = timezone.localtime()
-      quest_obj.save()
-      return redirect('display_detail_quest', pk=pk)
+   if request.user.is_superuser:
+      quest_obj = Quest.objects.get(pk=pk)
+      if request.method == 'POST':
+         stars_value = quest_obj.stars
+         mana_value = quest_obj.mana
+         target_name = quest_obj.publish_target
+         ResourceManager.addStars(User.objects.get(username=target_name), stars_value)
+         ResourceManager.addMana(User.objects.get(username=target_name), mana_value)
+         quest_obj.status = 'closed'
+         quest_obj.closed_date = timezone.localtime()
+         quest_obj.save()     
+         return redirect('display_detail_quest', pk=pk)
    return render(request, 'reward_quest.html', {'quest': quest_obj})     

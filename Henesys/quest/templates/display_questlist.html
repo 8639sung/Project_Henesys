@@ -25,7 +25,8 @@
                     <p class="card-text">
                         ({{quest.status}})<br>
                         <h5>{{quest.contents}}</h5>
-                        closed_date : {{quest.closed_date|date:"Y-m-d H:i"}}<br> 
+                        closed_date : {{quest.closed_date|date:"Y-m-d H:i"}}<br>
+                        publish_target : {{quest.publish_target}}<br>
                     </p> 
                 </div>
             </div>
@@ -34,7 +35,7 @@
 </div>
 
 <nav class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light">
-    <ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav">
         {% if request.user.is_superuser %}
         <button><a href="{% url 'create_quest' %}">Adding Quest</a></button>
         {% endif %}

@@ -26,7 +26,8 @@
                 <h5>{{quest.contents}}</h5>
                 rewards<br> 
                 stars : {{quest.stars}} mama : {{quest.mana}}</p>
-                closed_date : {{quest.closed_date|date:"Y-m-d H:i"}}<br> 
+                closed_date : {{quest.closed_date|date:"Y-m-d H:i"}}<br>
+                publish_target : {{quest.publish_target}} </p>
             </p> 
         </div>
     </div>
@@ -35,8 +36,7 @@
 <nav class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light">
     <ul class="navbar-nav">
         {% if quest.status == 'open' %}
-        {% if request.user.is_superuser %}
-        {% else %}
+        {% if user.username == quest.publish_target %}
         <button><a href="/quest/display_questlist/{{quest.pk}}/request">Complete</a></button>
         {% endif %}
         {% endif %}

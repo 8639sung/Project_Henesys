@@ -12,6 +12,7 @@ class Quest(models.Model):
     pub_date = models.DateTimeField()
     closed_date = models.DateTimeField(null=True, blank=True)
     due_date = models.DateTimeField(null=True, blank=True)
+    publish_target = models.CharField(max_length=50)
     tag = TaggableManager()
 
 

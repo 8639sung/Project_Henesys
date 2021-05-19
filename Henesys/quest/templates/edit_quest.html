@@ -23,6 +23,7 @@
         <input type="number" min="0" max="99999999" name="mana" value="{{ quest.mana }}"><br>
         expired date<br>
         <input type="datetime" name="due_date" value="{{ quest.due_date|date:"Y-m-d H:i" }}"><br>
+        publish_target : {{quest.publish_target}} </p>
         <input type="submit" value="Submit">
     </form>
 </body>
