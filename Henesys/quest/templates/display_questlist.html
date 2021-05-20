@@ -34,12 +34,12 @@
     </table>
 </div>
 
-<nav class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light">
-    <ul class="navbar-nav">
+<nav class="navbar fixed-bottom navbar-expand-lg py-1">
+    <div class="nav-bottom-item">
         {% if request.user.is_superuser %}
-        <button><a href="{% url 'create_quest' %}">Adding Quest</a></button>
+        <a class="nav-link" href="{% url 'create_quest' %} ">Adding Quest</a>
         {% endif %}
-    </ul>
+    </div>
 </nav>
 
 <form id="sort_form" method="get" action="{% url 'display_questlist' %}">
@@ -53,5 +53,8 @@
         $("#sort_form").submit();
     }
 </script>
+
+
+  
 
 {% endblock %}

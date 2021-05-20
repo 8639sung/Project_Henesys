@@ -1,7 +1,46 @@
 {% load active_link_tags %}
 
-<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="{% url 'home' %}">HENESYS</a>
+<style>
+  .navbar-nav>.active>a {
+    color: white;
+  }
+  .nav-link {
+    color: rgb(105, 104, 104);
+    font-size: 22px;
+    font-weight: bold;
+    font-style: Sodosans;
+  }
+  .nav-item>a:hover {
+    color: rgb(136, 136, 136);
+  }
+  .nav-bottom-item>a:hover {
+    color: rgb(136, 136, 136);
+  }
+  .navbar {
+    background-color: rgb(75, 75, 75);
+    padding-top: 10px !important; padding-bottom: 10px !important;
+  }
+  .nav-item {
+    float: left;
+    list-style: none;
+    padding: 0px 8px;
+    border-right: 2px solid rgb(61, 61, 61);
+  }
+  .nav-bottom-item {
+    float: left;
+    list-style: none;
+    padding: 0px 8px;
+  }
+  .nav-item:last-child {
+    border-right: none;
+  }
+</style>
+
+
+<nav class="navbar fixed-top navbar-expand-lg">
+    <font face = "Sodosans" size = "6">
+      <a href="{% url 'home' %}" style="text-decoration:none; color:white; font-weight:bold;">HENESYS&nbsp;&nbsp;</a>
+    </font>
     <div id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item {% active_link 'home' 'active' %}">
@@ -27,4 +66,4 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
           </div>
-  </nav>
+</nav>

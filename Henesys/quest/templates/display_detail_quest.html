@@ -33,29 +33,40 @@
     </div>
 </div>
 
-<nav class="navbar fixed-bottom navbar-expand-lg navbar-light bg-light">
-    <ul class="navbar-nav">
-        {% if quest.status == 'open' %}
-        {% if user.username == quest.publish_target %}
-        <button><a href="/quest/display_questlist/{{quest.pk}}/request">Complete</a></button>
-        {% endif %}
-        {% endif %}
-        {% if quest.status == 'review' %}
-          This Quest is currently under review&nbsp;&nbsp; 
-            {% if request.user.is_superuser %}
-            <button><a href="/quest/display_questlist/{{quest.pk}}/reward">Accept</a></button>&nbsp;
-            <button><a href="/quest/display_questlist/{{quest.pk}}/reject">Reject</a></button>
+<nav class="navbar fixed-bottom navbar-expand-lg py-1">
+        <ul class="navbar-nav">     
+            {% if quest.status == 'open' %}
+            {% if user.username == quest.publish_target %}
+            <li class="nav-bottom-item">
+                <a style="color:green" class="nav-link" href="/quest/display_questlist/{{quest.pk}}/request">Complete</a>
+            </li>
             {% endif %}
-        {% endif %}
-        
-    </ul>
-    <ul class="navbar-nav ml-auto">
-        {% if request.user.is_superuser %}
-        <button><a href="/quest/display_questlist/{{quest.pk}}/edit">Edit</a></button>&nbsp;
-        <button><a href="/quest/display_questlist/{{quest.pk}}/remove">Remove</a></button>&nbsp;
-        {% endif %}
-        <button><a href="{% url 'display_questlist' %}">Return</a></button>
-    </ul>
+            {% endif %}
+            {% if quest.status == 'review' %}
+                <a class="nav-link" style="font-weight:normal; font: size 22px; color:white;">This Quest is currently under review</a>  
+            {% if request.user.is_superuser %}
+            <li class="nav-bottom-item">    
+                <a style="color:green"class="nav-link" href="/quest/display_questlist/{{quest.pk}}/reward">Accept</a>
+            </li>
+            <li class="nav-bottom-item">
+                <a style="color:crimson" class="nav-link" href="/quest/display_questlist/{{quest.pk}}/reject">Reject</a>
+            </li>
+            {% endif %}
+            {% endif %}
+        </ul>
+        <ul class="navbar-nav ml-auto">   
+            {% if request.user.is_superuser %}
+            <li class="nav-bottom-item">
+                <a class="nav-link" href="/quest/display_questlist/{{quest.pk}}/edit">Edit</a>
+            </li>
+            <li class="nav-bottom-item">
+                <a class="nav-link" href="/quest/display_questlist/{{quest.pk}}/remove">Remove</a>
+            </li>
+            {% endif %}
+            <li class="nav-bottom-item">
+                <a class="nav-link" href="{% url 'display_questlist' %}">Return</a>
+            </li>
+        </ul>
 </nav>
 
 <form id="status_form" method="POST" action="{% url 'change_quest_status' %}">
