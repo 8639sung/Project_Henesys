@@ -5,9 +5,13 @@
 
     <form method='POST' action="{%url 'signup'%}">
     {% csrf_token %}
-    Username:
+    ID:
     <br>
     <input name="username"type="text">
+    <br>
+    Nickname:
+    <br>
+    <input name="nickname"type="text">
     <br>
     Password:
     <br>
@@ -17,7 +21,7 @@
     <br>
     <input name="password2"type="password">
     <br><br>
-    <input type="submit" class="btn btn-primary" value="sign up">
+    <input type="submit" class="btn btn-primary" value="Sign up">
     </form>
 
 </div>

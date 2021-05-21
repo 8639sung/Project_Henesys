@@ -13,6 +13,7 @@ class HenesysUser(models.Model):
     # additional fields (see https://docs.djangoproject.com/en/3.2/ref/models/fields/)
     stars = models.PositiveBigIntegerField(default=0)
     mana  = models.PositiveBigIntegerField(default=0)
+    nickname = models.CharField(max_length=50)
     temp  = models.PositiveBigIntegerField(default=0)
 
 

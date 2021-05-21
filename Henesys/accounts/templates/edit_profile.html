@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+
+    <title>Edit Profile</title>
+    <h1>Edit Profile</h1>
+
+    <form method='POST' action="{%url 'edit_profile'%}">
+    {% csrf_token %}
+    Nickname:
+    <br>
+    <input name="nickname"type="text"value="{{user.henesysuser.nickname}}">
+    <br><br>
+    <input type="submit" class="btn btn-primary" value="Adjust">
+    </form>
+
+</div>
+
+{% endblock %}
