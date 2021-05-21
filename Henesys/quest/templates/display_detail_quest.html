@@ -27,7 +27,7 @@
                 rewards<br> 
                 stars : {{quest.stars}} mama : {{quest.mana}}</p>
                 closed_date : {{quest.closed_date|date:"Y-m-d H:i"}}<br>
-                publish_target : {{quest.publish_target}} </p>
+                publish_target : {{publish_target.nickname}} </p>
             </p> 
         </div>
     </div>
@@ -36,7 +36,7 @@
 <nav class="navbar fixed-bottom navbar-expand-lg py-1">
         <ul class="navbar-nav">     
             {% if quest.status == 'open' %}
-            {% if user.username == quest.publish_target %}
+            {% if user_id == quest.publish_target %}
             <li class="nav-bottom-item">
                 <a style="color:green" class="nav-link" href="/quest/display_questlist/{{quest.pk}}/request">Complete</a>
             </li>

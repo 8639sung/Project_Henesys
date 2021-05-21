@@ -4,7 +4,7 @@ from django.contrib import auth
 from django.template.response import TemplateResponse
 from .models import Quest
 from django.utils import timezone
-from accounts.models import ResourceManager 
+from accounts.models import ResourceManager, HenesysUser 
 from pprint import pprint
 
 def display_questlist(request):
@@ -24,7 +24,9 @@ def display_questlist(request):
 
 def display_detail_quest(request, pk):
    quest_obj = Quest.objects.get(pk=pk)
-   return render(request, 'display_detail_quest.html', {'quest':quest_obj})   
+   publish_target = HenesysUser.objects.get(id=quest_obj.publish_target)
+   user_id = str(request.user.id)
+   return render(request, 'display_detail_quest.html', {'quest':quest_obj, 'user_id':user_id, 'publish_target':publish_target})   
 
 def change_quest_status(request):
    if request.user.is_superuser:
@@ -40,7 +42,7 @@ def create_quest(request):
    if request.user.is_superuser:
       if request.method == 'POST':
          publish_target_list=request.POST.getlist('selected_user')
-         for target_name in publish_target_list:
+         for target_id in publish_target_list:
             new_quest=Quest.objects.create(
                questname=request.POST['questname'],
                contents=request.POST['contents'],
@@ -50,7 +52,7 @@ def create_quest(request):
                pub_date=timezone.localtime(),
                closed_date=None,
                due_date=request.POST['due_date'],
-               publish_target=target_name
+               publish_target=target_id
                )
          return redirect('display_questlist')
       return render(request, 'create_quest.html', {'userlist':userlist})
@@ -100,9 +102,9 @@ def reward_quest(request, pk):
       if request.method == 'POST':
          stars_value = quest_obj.stars
          mana_value = quest_obj.mana
-         target_user = quest_obj.publish_target
-         ResourceManager.addStars(User.objects.get(pk=target_user), stars_value)
-         ResourceManager.addMana(User.objects.get(pk=target_user), mana_value)
+         target_id = quest_obj.publish_target
+         ResourceManager.addStars(User.objects.get(id=target_id), stars_value)
+         ResourceManager.addMana(User.objects.get(id=target_id), mana_value)
          quest_obj.status = 'closed'
          quest_obj.closed_date = timezone.localtime()
          quest_obj.save()     
