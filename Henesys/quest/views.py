@@ -16,7 +16,12 @@ def display_questlist(request):
          quest.save()
       elif quest.status == 'expired' :
          quest.status = 'open'
+         quest.closed_date = None
          quest.save()
+      elif quest.status == 'open' :
+         if quest.closed_date != None :
+            quest.closed_date = None
+            quest.save()
    sort = request.GET.get('sort', '')
    if sort == 'open':
         questlist = Quest.objects.filter(status='open').order_by('-pub_date')
