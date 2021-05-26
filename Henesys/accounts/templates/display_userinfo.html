@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<title>My account</title>
+<div class="container my-3">
+    <h1>My account</h1>
+   
+    Name : {{ nickname}}
+    <BR>
+    ID : {{ ID }}
+    <BR>
+    STARS : {{ userstars }}
+    <BR>
+    MANA : {{ usermana }}
+</div>
+
+<nav class="navbar fixed-bottom navbar-expand-lg py-1">
+        <ul class="navbar-nav">     
+            <li class="nav-bottom-item">
+                <a class="nav-link" href="{% url 'edit_userinfo' %}">Edit Profile</a>
+            </li>
+        </ul>
+</nav>
+
+{% endblock %}

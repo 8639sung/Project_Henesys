@@ -1,10 +1,9 @@
 from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
 from django.contrib import auth
-from django.template.response import TemplateResponse
+
 
 def home(request):
-    userinfo = {}
-    userinfo['username'] = request.user.username
-    userinfo['userstars'] = request.user.henesysuser.stars
-    userinfo['usermana'] = request.user.henesysuser.mana
-    return TemplateResponse(request, 'home.html', userinfo)
+    if request.user.is_authenticated:
+        return render(request, 'home.html')
+    else : return render(request, 'login.html')

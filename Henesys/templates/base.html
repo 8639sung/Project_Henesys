@@ -1,11 +1,25 @@
 {% load static %}
+<style>
+  body {
+    background-image: url('https://i.redd.it/y68mq3s193431.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+  }
+  body {
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  overflow-y: scroll; 
+  }
+  body::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+  }
+  </style>
 
 <!DOCTYPE html>
-
 <body>
-
     {% include "navbar.html" %} 
-    <br><br>
+    <br><br><br>
     <div id="content">
       {% block content %}{% endblock %}
     </div>
@@ -16,5 +30,3 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 </body>
-
-  

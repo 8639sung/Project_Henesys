@@ -4,9 +4,9 @@
 <title>Quest List</title>
 
 <div class="container my-3">
-    <h1>Quest List</h1>
+    <h1 class="text-center">Quest List</h1>
 
-    <div class="col-2">
+    <div class="text-right">
         <select onchange="sorting(this);">
             <option value="recent" {% if sort == 'recent' %}selected{% endif %}>Recent</option>
             <option value="open" {% if sort == 'open' %}selected{% endif %}>Open</option>
@@ -17,20 +17,30 @@
     </div>
 
     <table>
+        <br>
         {% for quest in questlist %}
-            <div class="card">
+        <a href="{{quest.pk}}" class="text-decoration-none">
+            <div class="card text-white bg-dark mb-2">
+                <div class="card-header text-right">
+                    {% if quest.status == 'closed' %}
+                    {{quest.status}} : {{quest.closed_date|date:"Y-m-d H:i"}}<br>
+                    {% else %}
+                    {{quest.status}}
+                    {% endif %}
+                </div>
                 <div class="card-body">
-                    <h3 class="card-title"><a href="{{quest.pk}}">{{quest.questname}}</a></h3> 
-                    <h6 class="card-subtitle mb-2 text-muted">{{quest.pub_date|date:"Y-m-d H:i"}} ~ {{quest.due_date|date:"Y-m-d H:i"}}</h6>
+                    <h3 class="card-title">{{quest.questname}}</h3> 
                     <p class="card-text">
-                        ({{quest.status}})<br>
                         <h5>{{quest.contents}}</h5>
-                        closed_date : {{quest.closed_date|date:"Y-m-d H:i"}}<br>
-                        quest_target : {{quest.publish_target}}<br> 
+                        <br>
+                        <h6 class="card-subtitle mb-2 text-muted">{{quest.pub_date|date:"Y-m-d H:i"}} ~ {{quest.due_date|date:"Y-m-d H:i"}}</h6>
                     </p> 
                 </div>
             </div>
+        </a>
         {% endfor %}
+        <br>
+        <br>
     </table>
 </div>
 
@@ -53,8 +63,5 @@
         $("#sort_form").submit();
     }
 </script>
-
-
-  
 
 {% endblock %}

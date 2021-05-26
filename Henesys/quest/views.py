@@ -80,7 +80,7 @@ def edit_quest(request, pk):
 
 def request_reward(request, pk):
    quest_obj = Quest.objects.get(pk=pk)
-   if request.user.username == quest_obj.publish_target:
+   if str(request.user.id) == quest_obj.publish_target:
       if request.method == 'POST':
          quest_obj.status = 'review'
          quest_obj.save()
