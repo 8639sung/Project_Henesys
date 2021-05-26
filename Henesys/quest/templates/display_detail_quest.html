@@ -34,13 +34,19 @@
 </div>
 
 <nav class="navbar fixed-bottom navbar-expand-lg py-1">
-        <ul class="navbar-nav">     
-            {% if quest.status == 'open' %}
-            {% if user_id == quest.publish_target %}
+        <ul class="navbar-nav">
+            {% if current_time > quest.due_date %}
             <li class="nav-bottom-item">
-                <a style="color:green" class="nav-link" href="/quest/display_questlist/{{quest.pk}}/request">Complete</a>
+                <a class="nav-link" style="font-weight:normal; font: size 22px; color:white;">This Quest is already expired</a>  
             </li>
-            {% endif %}
+            {% else %}     
+                {% if user_id == quest.publish_target %}
+                {% if quest.status == 'open' %}   
+                <li class="nav-bottom-item">
+                  <a style="color:green" class="nav-link" href="/quest/display_questlist/{{quest.pk}}/request">Complete</a>
+                </li>
+                {% endif %}
+                {% endif %}
             {% endif %}
             {% if quest.status == 'review' %}
                 <a class="nav-link" style="font-weight:normal; font: size 22px; color:white;">This Quest is currently under review</a>  

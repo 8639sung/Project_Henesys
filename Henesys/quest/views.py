@@ -9,6 +9,14 @@ from pprint import pprint
 
 def display_questlist(request):
    questlist = Quest.objects.all()
+   current_time = timezone.localtime()
+   for quest in questlist:
+      if current_time > quest.due_date :
+         quest.status = 'expired'
+         quest.save()
+      elif quest.status == 'expired' :
+         quest.status = 'open'
+         quest.save()
    sort = request.GET.get('sort', '')
    if sort == 'open':
         questlist = Quest.objects.filter(status='open').order_by('-pub_date')
@@ -18,6 +26,8 @@ def display_questlist(request):
         questlist = Quest.objects.filter(status='review').order_by('-pub_date')
    elif sort == 'rejected':
         questlist = Quest.objects.filter(status='rejected').order_by('-pub_date')
+   elif sort == 'expired':
+        questlist = Quest.objects.filter(status='expired').order_by('-pub_date')
    else:
         questlist = Quest.objects.order_by('-pub_date')
    return render(request,'display_questlist.html', {'questlist':questlist, 'sort':sort})
@@ -26,7 +36,8 @@ def display_detail_quest(request, pk):
    quest_obj = Quest.objects.get(pk=pk)
    publish_target = HenesysUser.objects.get(id=quest_obj.publish_target)
    user_id = str(request.user.id)
-   return render(request, 'display_detail_quest.html', {'quest':quest_obj, 'user_id':user_id, 'publish_target':publish_target})   
+   current_time = timezone.localtime()
+   return render(request, 'display_detail_quest.html', {'quest':quest_obj, 'user_id':user_id, 'publish_target':publish_target, 'current_time':current_time})   
 
 def change_quest_status(request):
    if request.user.is_superuser:
