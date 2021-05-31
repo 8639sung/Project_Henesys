@@ -1,33 +1,44 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
+<title>Edit Quest</title>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>New Quest</title>
-</head>
-<body>
-    <h1>Request New Quest</h1>
-    <form method="POST">
-        {% csrf_token %}
-        Quest name<br>
-        <input type="text" name="questname" value="{{ quest.questname }}"><br>
-        Quest contents<br>
-        <textarea rows="10" cols="50" name="contents">{{ quest.contents }}</textarea><br>
-        stars<br>
-        <input type="number" min="0" max="99999999" name="stars" value="{{ quest.stars }}"><br>
-        mana<br>
-        <input type="number" min="0" max="99999999" name="mana" value="{{ quest.mana }}"><br>
-        expired date<br>
-        <input type="datetime" name="due_date" value="{{ quest.due_date|date:"Y-m-d H:i" }}"><br>
-        publish_target : {{quest.publish_target}} </p>
-        <input type="submit" value="Submit">
-    </form>
-</body>
-<button><a href="/quest/display_questlist/{{quest.pk}}">Return</a></button>
-</html>
+<div class="container my-3">
+    <h1 class="text-center">Edit Quest</h1>
+    <br><br>
+    <div class="card text-white bg-dark mb-2">
+        <div class="card-body">
+            <form method="POST">
+            {% csrf_token %}
+            Quest name<br>
+            <input type="text" name="questname" value="{{ quest.questname }}"><br>
+            Quest contents<br>
+            <textarea rows="10" cols="50" name="contents">{{ quest.contents }}</textarea><br>
+            stars<br>
+            <input type="number" min="0" max="99999999" name="stars" value="{{ quest.stars }}"><br>
+            mana<br>
+            <input type="number" min="0" max="99999999" name="mana" value="{{ quest.mana }}"><br>
+            expired date<br>
+            <input type="datetime" name="due_date" value="{{ quest.due_date|date:"Y-m-d H:i" }}"><br>
+            <br>
+            publish_target : {{quest.publish_target}} </p>
+
+            <nav class="navbar fixed-bottom navbar-expand-lg py-1">
+                <ul class="navbar-nav">
+                    <li class="nav-bottom-item">    
+                    <input type="submit" style="color:green; background-color: Transparent; border: none;" class="nav-link" href="{% url 'create_quest' %}" value="Submit">
+                    </li>
+                    <li class="nav-bottom-item">
+                    <a class="nav-link" href="/quest/display_questlist/{{quest.pk}}">Return</a>
+                </li>
+                </ul>
+            </nav>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
 
 {% endblock %}

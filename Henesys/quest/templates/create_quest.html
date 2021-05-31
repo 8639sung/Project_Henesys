@@ -1,38 +1,46 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<title>New Quest</title>
 
-<!DOCTYPE html>
-<html lang="en">
 <div class="container my-3">
-    <head>
-    <meta charset="UTF-8">
-    <title>New Quest</title>
-    </head>
-    <body>
-        
-    <h1>Request New Quest</h1>
-    <form method="POST">
-        {% csrf_token %}
-        Quest name<br>
-        <input type="text" name="questname"><br>
-        <br>Quest contents<br>
-        <textarea rows="10" cols="50" name="contents"></textarea><br>
-        stars<br>
-        <input type="number" min="0" max="99999999" name="stars"><br>
-        mana<br>
-        <input type="number" min="0" max="99999999" name="mana"><br>
-        expired date<br>
-        <input type="datetime" name="due_date" value="0000-00-00 00:00"><br>
-        
-        {% for user in userlist %}
-            <input id="selected_user" type="checkbox" name="selected_user" value="{{ user.id }}">&nbsp{{user.henesysuser.nickname}}(ID : {{user.username}})&nbsp
-        {% endfor %}
+    <h1 class="text-center">New Quest</h1>
+    <br><br>
+    <div class="card text-white bg-dark mb-2">
+        <div class="card-body">
+            <form method="POST">
+            {% csrf_token %}
+            Quest name<br>
+            <input type="text" name="questname"><br>
+            <br>Quest contents<br>
+            <textarea rows="10" cols="50" name="contents"></textarea><br>
+            stars<br>
+            <input type="number" min="0" max="99999999" name="stars"><br>
+            mana<br>
+            <input type="number" min="0" max="99999999" name="mana"><br>
+            expired date<br>
+            <input type="datetime" name="due_date" value="0000-00-00 00:00"><br>
+            <br>
+            {% for user in userlist %}
+                <input id="selected_user" type="checkbox" name="selected_user" value="{{ user.id }}">&nbsp{{user.henesysuser.nickname}}(ID : {{user.username}})&nbsp
+            {% endfor %}
 
-        <br><input type="submit" value="Submit"> <button><a href="{% url 'display_questlist' %}">Return</a></button>
-    </form>
-    </body>
+            <nav class="navbar fixed-bottom navbar-expand-lg py-1">
+                <ul class="navbar-nav">
+                    <li class="nav-bottom-item">    
+                    <input type="submit" style="color:green; background-color: Transparent; border: none;" class="nav-link" href="{% url 'create_quest' %}" value="Submit">
+                    </li>
+                    <li class="nav-bottom-item">
+                    <a class="nav-link" href="{% url 'display_questlist' %}">Return</a>
+                </li>
+                </ul>
+            </nav>
+            </form>
+        </div>
+    </div>
 </div>
-</html>
+
+
+
 
 {% endblock %}
