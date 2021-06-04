@@ -9,4 +9,5 @@ urlpatterns = [
     path('edit_userinfo/', views.edit_userinfo, name='edit_userinfo'),
     path('addStarsWrapper/', views.addStarsWrapper, name='addStarsWrapper'),
     path('addManaWrapper/', views.addManaWrapper, name='addManaWrapper'),
+    path('save_current_device/', views.save_current_device, name='save_current_device'),
 ]

@@ -1,8 +1,10 @@
+from multiprocessing import Array
 from django.conf import settings
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
+
 
 class HenesysUser(models.Model):
 
@@ -14,6 +16,7 @@ class HenesysUser(models.Model):
     stars = models.PositiveBigIntegerField(default=0)
     mana  = models.PositiveBigIntegerField(default=0)
     nickname = models.CharField(max_length=50)
+    mac_address = models.CharField(max_length=20)
     temp  = models.PositiveBigIntegerField(default=0)
 
 

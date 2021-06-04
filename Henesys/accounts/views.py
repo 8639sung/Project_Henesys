@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from .models import ResourceManager, HenesysUser
 from django.template.response import TemplateResponse
-
+from Henesys.nmap_scan import *
  
 def signup(request):
     if request.method == "POST":
@@ -11,7 +11,6 @@ def signup(request):
             user = User.objects.create_user(
                 username=request.POST["username"],
                 password=request.POST["password1"],
-                usernickname=request.POST["nickname"]
                 )
             auth.login(request,user)
             return redirect('home')
@@ -24,6 +23,7 @@ def display_userinfo(request):
     userinfo['ID'] = request.user.username
     userinfo['userstars'] = request.user.henesysuser.stars
     userinfo['usermana'] = request.user.henesysuser.mana
+    userinfo['mac_address'] = request.user.henesysuser.mac_address
     return TemplateResponse(request, 'display_userinfo.html', userinfo)
     
 def edit_userinfo(request):
@@ -59,3 +59,10 @@ def addStarsWrapper(request):
 def addManaWrapper(request):
     ResourceManager.addMana(request.user, mana_value)
     return redirect('home')    
+
+def save_current_device(request):
+    id = request.user.id
+    user_obj = HenesysUser.objects.get(id=id)
+    user_obj.mac_address = get_my_mac()
+    user_obj.save()
+    return redirect('display_userinfo')
