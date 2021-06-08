@@ -64,5 +64,6 @@ def save_current_device(request):
     id = request.user.id
     user_obj = HenesysUser.objects.get(id=id)
     user_obj.mac_address = get_my_mac()
+    print(user_obj.mac_address)
     user_obj.save()
     return redirect('display_userinfo')
